@@ -1,0 +1,52 @@
+const stubs = [
+    'Stubs',
+    'McSqueeb',
+    1987,
+    'Alpha Dawg',
+    ['Jepu', 'Reynard', 'Scareface'],
+    true,
+    7777
+];
+
+const types = []; // creates empty array
+// console.log(jonas[0])
+// console.log(jonas[1])
+// ...
+// console.log(jonas[4]
+// console.log(jonas[5] does not exist
+
+for (let i = 0; i < stubs.length; i++) {
+    console.log(stubs[i], typeof stubs[i]);
+
+    //types[i] = typeof stubs[i] // fills the empty array
+    types.push(typeof stubs[i]) // fills as well / cleaner
+}
+
+console.log(types);
+
+const years = [1991, 1987, 1969, 1567];
+const ages = []
+
+for (let i = 0; i < years.length; i++) {
+    ages.push(2037 - years[i]);
+}
+
+console.log(ages);
+
+// continue and break statements
+console.log('-----ONLY STRINGS-----');
+for (let i = 0; i < stubs.length; i++) {
+    if (typeof stubs[i] !== 'string') continue;
+    console.log(stubs[i], typeof stubs[i]);
+}
+
+// continue skips iteration based on conditions, current iteration of the loop is exited and the next is started immediately
+
+console.log('-----BREAK WITH NUMBER-----');
+for (let i = 0; i < stubs.length; i++) {
+    if (typeof stubs[i] === 'number') break;
+    console.log(stubs[i], typeof stubs[i]);
+}
+
+// break completely stops the loop based on conditions
+*/
