@@ -1,0 +1,380 @@
+'use strict';
+
+// Data needed for a later exercise
+// const flights =
+//   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// Data needed for first part of the section
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours = {
+  [weekdays[3]]: {
+    // can put any expression in []
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    // any expression as long as it makes sense
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurant = {
+  rName: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  // openingHours: openingHours, // Restoring openingHours
+  openingHours, // ES6 we can just type once
+
+  order(starterIndex, mainIndex) {
+    // can write methods like this ES6
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({
+    //with defaults set
+    time = '20.00',
+    address = '223 Gladbeck Way',
+    mainIndex = 0,
+    starterIndex = 0,
+  }) {
+    console.log(
+      `Order recieved! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your derishus pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
+
+  orderPizza(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+};
+restaurant.orderPizza('cheese', 'morecheese', 'evenmorecheese');
+/*
+// Looping over property NAMES of an object
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days : `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+//console.log(openStr);
+
+// Looping over property VALUES of an object
+
+const values = Object.values(openingHours);
+console.log(values);
+
+// Looping over object ENTRIES
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+/*
+// OPTIONAL CHAINING
+// if (restaurant.openingHours && restaurant.openingHours.mon)
+//   console.log(restaurant.openingHours.mon.open); // can get messy
+
+// if (restaurant.openingHours.fri) console.log(restaurant.openingHours.fri.open);
+
+// Without optional chaining we get error
+//console.log(restaurant.openingHours.mon.open);
+
+// Optional chaining in practice
+console.log(restaurant.openingHours.mon?.open); // returns undefined
+// can do multiple checks
+console.log(restaurant.openingHours?.mon?.open);
+
+// Loop array and return if open or not
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+for (const day of days) {
+  //console.log(day);
+  // Optional chaining and nullish coalescing working together
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// Methods and optional chaining
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+// Arrays and optional chaining
+const users = [{ name: 'Stubs', email: 'supstubs@stubs.co.uk' }];
+console.log(users[0]?.name ?? 'User array empty');
+
+const user = [];
+console.log(user[0]?.name ?? 'User array empty');
+
+// Without optional chaining we would have to write
+if (users.length > 0) console.log(users[0].name);
+else console.log('user array empty');
+
+/*
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log('-----Loops array, outputs each entry-----');
+for (const item of menu) console.log(item);
+console.log('-----Loops array of arrays-----');
+for (const item of menu.entries()) {
+  console.log(item);
+}
+console.log('-----Loops array of arrays-----');
+for (const item of menu.entries()) {
+  console.log(`${item[0] + 1}: ${item[1]}`);
+}
+console.log('-----Destructuring and Looping-----');
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+//console.log(menu.entries());
+//console.log([...menu.entries()]);
+
+/*
+const rest1 = {
+  name: 'Poopland',
+  // numGuests: 20,
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'Buttland',
+  owner: 'Lord Buttwad',
+};
+
+// OR assignment operator
+//rest1.numGuests = rest1.numGuests || 10;
+//rest2.numGuests = rest2.numGuests || 10;
+//rest1.numGuests ||= 10;
+//rest2.numGuests ||= 10;
+
+// Nullish assignment operator
+// rest1.numGuests ??= 10;
+// rest2.numGuests ??= 10;
+
+// AND assignment operator
+// rest1.owner = rest1.owner && '<ANONYMOUS>';
+// rest2.owner = rest2.owner && '<ANONYMOUS>';
+
+// rest1.owner &&= '<ANONYMOUS>';
+// rest2.owner &&= '<ANONYMOUS>';
+
+//console.log(rest1);
+//console.log(rest2);
+
+/*
+// NULLISH COALESCENT OPERATOR
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests);
+
+// Nullish: null and undefined (NOT 0 or '') (ES2020)
+const guestsCorrect = restaurant.numGuests ?? 10;
+console.log(guestsCorrect);
+
+/*
+console.log('-------OR-------');
+// Use any date type, return any data type, short circuiting
+// Short circuit evaluation
+// If the first value is a truthy value, it will be returned ||
+console.log(3 || 'Jonas'); // returns 3
+console.log('' || 'Jonas');
+console.log(true || 0);
+console.log(undefined || null);
+// Keeps skipping falsys
+console.log(undefined || 0 || '' || 'hello' || 23 || null);
+// 'hello' returned
+//restaurant.numGuests = 23;
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests1);
+
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2);
+
+console.log('------AND------');
+// short cicruits when the first value is falsy
+console.log(0 && 'Jonas'); // returns 0
+console.log(7 && 'Jonas'); // returns Jonas
+
+console.log('Hello' && 23 && null && 'Jonas'); // returns null
+
+// Does order pizza exist? If so order pizza
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'pineapple');
+}
+
+restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'pineapple');
+
+/*
+// DESTRUCTURING
+
+// SPREAD, is on the RIGHT of = sign
+const arr = [1, 2, ...[3, 4]];
+
+// REST, is on LEFT side of = sign
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+// Collects elements unused in destructuring operation
+// [1, 2 [3, 4, 5]]
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+
+// Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+// FUNCTIONS
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
+};
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 3, 6, 3, 2, 8, 3, 6);
+
+const x = [23, 5, 7];
+add(...x);
+
+restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+restaurant.orderPizza('mushrooms');
+
+// REST - VARIABLE
+// SPREAD - VALUES
+
+/* THE SPREAD OPERATOR
+
+const spreadArr = [7, 8, 9];
+const badNewArr = [1, 2, spreadArr[0], spreadArr[1], spreadArr[2]];
+
+const newArr = [1, 2, ...spreadArr];
+// as opposed to const newArr = [1, 2, [spreadArr]] which would return [1, 2, [7, 8, 9]]
+
+//console.log(...newArr); // logs individual elements of the array
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+//console.log(newMenu);
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+// Join two arrays or more
+const spreadMenu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+const str = 'Stubs';
+const letters = [...str, '', 'R.'];
+//console.log(...str);
+// console.log(`${...str} Rippers`); wont work
+
+// Real world example
+const ingredients = [
+  //prompt("Let's make pasta! Ingredient 1?"),
+  //prompt("Let's make pasta! Ingredient 2?"),
+  //prompt("Let's make pasta! Ingredient 3?"),
+];
+//console.log(ingredients);
+restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = { ...restaurant, founder: 'Stubs', established: 1987 };
+//console.log(newRestaurant);
+
+const restaurantCopy = { ...restaurant };
+restaurantCopy.rName = 'Stubs Sandwich Shack';
+//console.log(restaurantCopy.rName);
+//console.log(restaurant.rName);
+
+restaurant.orderDelivery({
+  time: '22.30',
+  address: '223 Gladbeck Way',
+  mainIndex: 2,
+  starterIndex: 1,
+});
+
+restaurant.orderDelivery({
+  address: '223 Gladbeck Way',
+  starterIndex: 1,
+});
+
+const { rName, openingHours, categories } = restaurant;
+//console.log(rName, openingHours, categories);
+
+const {
+  rName: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+// console.log(restaurantName, hours, tags);
+
+// Creating default arrays is useful for real world situations where the data is not hard coded into our script
+const { menu = [], starterMenu: starters = [] } = restaurant;
+//console.log(menu, starters);
+
+// Mutating variables
+let a = 111;
+let b = 999;
+const obj = { a: 23, b: 7, c: 14 };
+
+({ a, b } = obj); // needs to be wrapped in () to work
+//console.log(a, b);
+
+// Nested objects
+const {
+  fri: { open, close },
+} = openingHours;
+//console.log(open, close);
+*/
+/*
+// Destructuring Arrays
+const arr = [2, 3, 4];
+// const a = arr[0];
+// const b = arr[1];
+// const c = arr[2];
+
+// with destructuring
+const [x, y, z] = arr; // destructuring assignment
+// console.log(x, y, z);
+// console.log(arr);
+
+let [main, , secondary] = restaurant.categories;
+//console.log(main, secondary);
+
+// Switching array positions without destructuring
+const temp = main;
+main = secondary;
+secondary = temp;
+
+// Switching array positions with destructuring
+[main, secondary] = [secondary, main];
+
+// Returning multiple values by destructuring arrays in functions
+const [starter, mainCourse] = restaurant.order(2, 0);
+//console.log(starter, mainCourse);
+
+// Nested destructuring
+const nested = [2, 4, [5, 6]];
+// const [i, , j] = nested;
+// console.log(i, j);
+const [i, , [j, k]] = nested;
+//console.log(i, j, k);
+
+// Default values - useful when we dont know array size
+const [p = 1, q = 1, r = 1] = [8, 9];
+//console.log(p, q, r);
+*/
