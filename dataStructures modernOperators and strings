@@ -60,7 +60,36 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
-restaurant.orderPizza('cheese', 'morecheese', 'evenmorecheese');
+const orderSet = new Set([
+  'pizza',
+  'pasta',
+  'pizza',
+  'risotto',
+  'pizza',
+  'pasta',
+]);
+console.log(orderSet);
+
+console.log(new Set('Stubs'));
+console.log(orderSet.size);
+console.log(orderSet.has('Pizza'));
+console.log(orderSet.has('Bread'));
+orderSet.add('garlic Bread');
+orderSet.add('garlic Bread');
+orderSet.delete('risotto');
+// orderSet.clear(); WILL CLEAR SET
+
+for (const order of orderSet) console.log(order);
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+
+const staffUnique = [...new Set(staff)];
+
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+
+console.log(new Set('Stubs').size);
 /*
 // Looping over property NAMES of an object
 const properties = Object.keys(openingHours);
