@@ -216,3 +216,25 @@ console.log(
 console.log('Japan:', new Intl.NumberFormat('jp-JP').format(num));
 console.log('Finland:', new Intl.NumberFormat('fi-FI').format(num));
 */
+// setTimeout
+const ingredients = ['olives', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza 🍕 with ${ing1} and ${ing2}`),
+  3000,
+  ...ingredients
+);
+console.log('Waiting...');
+
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+};
+
+setInterval
+setInterval(function () {
+  const now = new Date();
+  console.log(new Intl.DateTimeFormat('en-GB', options).format(now));
+}, 1000);
