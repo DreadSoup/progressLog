@@ -87,3 +87,87 @@ logo.classList.contains('c', 'j');
 
 // Dont use
 logo.className = 'jonas';
+
+console.log(e.target.getBoundingClientRect());
+console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+console.log(
+  'height/width viewport',
+  document.documentElement.clientHeight,
+  document.documentElement.clientWidth
+);
+
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (e) {
+  alert('addEventListener: Great! You are reading the heading :D');
+
+  // h1.removeEventListener('mouseenter', alertH1);
+}; // only listen to event once
+
+h1.addEventListener('mouseenter', alertH1); // usual way, good for adding multiple event listeners to the same event, removable
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (e) {
+//   alert('addEventListener: Great! You are reading the heading :D');
+//}; // old skool, gets overwritten, not removable
+
+
+// rgb(255,255,255)
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)}`;
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  // e.currentTarget === this
+
+  // Stop propagtion
+  e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+});
+
+document.querySelector('.nav').addEventListener(
+  'click',
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log('NAV', e.target, e.currentTarget);
+  },
+  false // capturing - set to true to activate
+);
+*/
+/*
+const h1 = document.querySelector('h1');
+
+// Going downwards : child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// Going upwards : parent
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// Going sideways : siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
+*/
